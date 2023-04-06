@@ -1,6 +1,7 @@
 package edu.miu.demo.repo;
 
 import edu.miu.demo.domain.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,10 @@ public interface UserRepo extends CrudRepository<User,Long> {
 
     List<User> findAll();
 
-    List<User> findUsersByPostsGreaterThan(int num);
+    //@Query( "select p from Product p where count(p.reviews) >= :num" )
+
+//    @Query("select u from User u where count(u.posts) >= :num")
+    @Query("SELECT u FROM User u JOIN u.posts p GROUP BY u.id HAVING COUNT(p) > :num")
+    List<User> findByPostsGreaterThan(int num);
+
 }

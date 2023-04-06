@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,14 +18,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        var result = new ArrayList<User>();
-        userRepo.findAll().forEach(result::add);
-        return result;
+        return new ArrayList<User>(userRepo.findAll());
     }
 
     @Override
     public User getById(long id) {
-        return userRepo.findById(id).get();
+        return userRepo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User with ID " + id + " not found."));
     }
 
     @Override
@@ -43,8 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUsersByPostsGreaterThan(int num) {
-        return userRepo.findUsersByPostsGreaterThan(num);
+    public List<User> findByPostsGreaterThan(int num) {
+        return userRepo.findByPostsGreaterThan(num);
+    }
+
+    @Override
+    public void seed(List<User> users) {
+        userRepo.saveAll(users);
     }
 
 

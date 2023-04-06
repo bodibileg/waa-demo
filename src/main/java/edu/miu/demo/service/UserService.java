@@ -15,5 +15,7 @@ public interface UserService {
 
     void update(long id, User user);
 
-    List<User> findUsersByPostsGreaterThan(int num);
+    List<User> findByPostsGreaterThan(int num);
+
+    void seed(List<User> users);
 }

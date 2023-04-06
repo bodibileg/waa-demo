@@ -45,4 +45,11 @@ public class PostController {
     public void update(@PathVariable long id, @RequestBody Post post) {
         postService.update(id, post);
     }
+
+    @GetMapping("/filter")
+    public List<Post> findByTitle(
+            @RequestParam(name = "title", required = false) String title
+    ){
+        return postService.findPostByTitleContainingIgnoreCase(title);
+    }
 }

@@ -7,8 +7,8 @@ import edu.miu.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findAll(long user_id) {
-        var user = userRepo.findById(user_id).get();
+        var user = userRepo.findById(user_id).orElseThrow(() -> new NoSuchElementException("User with ID " + user_id + " not found."));;
         return user.getPosts();
     }
 
@@ -40,6 +40,7 @@ public class PostServiceImpl implements PostService {
         posts.add(p);
         user.setPosts(posts);
         userRepo.save(user);
+//        postRepo.save(p);
     }
 
     @Override
@@ -49,9 +50,17 @@ public class PostServiceImpl implements PostService {
         posts = posts.stream().filter(p -> p.getId() != id).collect(Collectors.toList());
         user.setPosts(posts);
         userRepo.save(user);
+        postRepo.deleteById(id);
     }
 
     @Override
     public void update(long id, Post post) {
     }
+
+    @Override
+    public List<Post> findPostByTitleContainingIgnoreCase(String str) {
+        return postRepo.findPostByTitleContainingIgnoreCase(str);
+    }
+
+
 }

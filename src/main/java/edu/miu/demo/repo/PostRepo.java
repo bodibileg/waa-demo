@@ -10,4 +10,6 @@ import java.util.List;
 public interface PostRepo extends CrudRepository<Post,Long> {
 
     List<Post> findAll();
+
+    List<Post> findPostByTitleContainingIgnoreCase(String str);
 }

@@ -15,8 +15,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> findAll() {
-        return userService.findAll();
+    public List<User> findAll(
+//            @RequestParam(name = "post-count", required = false) String num
+    ) {
+//        if(num != null) return userService.findUsersByPostsGreaterThanEqual(Integer.parseInt(num));
+//        else
+            return userService.findAll();
+    }
+
+    @GetMapping("/post-count/{num}")
+    public List<User> findByPostCount(@PathVariable int num) {
+        return userService.findByPostsGreaterThan(num);
     }
 
     @GetMapping("/{id}")
@@ -32,5 +41,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         userService.delete(id);
+    }
+
+    @PostMapping("seed")
+    public void save(@RequestBody List<User> users) {
+        userService.seed(users);
     }
 }
