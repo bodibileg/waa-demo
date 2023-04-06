@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/users/{user_id}/posts")
 public class PostController {
 
     @Autowired
@@ -17,26 +17,27 @@ public class PostController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<Post> findAll() {
-        return postService.findAll();
+    public List<Post> findAll(@PathVariable long user_id) {
+
+        return postService.findAll(user_id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Post getById(@PathVariable long id) {
-        return postService.getById(id);
+    public Post getById(@PathVariable long id, @PathVariable long user_id) {
+        return postService.getById(id, user_id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void save(@RequestBody Post p) {
-        postService.save(p);
+    public void save(@RequestBody Post p, @PathVariable long user_id) {
+        postService.save(p, user_id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
-        postService.delete(id);
+    public void delete(@PathVariable long id, @PathVariable long user_id) {
+        postService.delete(id, user_id);
     }
 
     @ResponseStatus(HttpStatus.OK)

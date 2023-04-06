@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface PostService {
 
-    List<Post> findAll();
+    List<Post> findAll(long user_id);
 
-    Post getById(long id);
+    Post getById(long id, long user_id);
 
-    void save(Post p);
+    void save(Post p, long user_id);
 
-    void delete(long id);
+    void delete(long id, long user_id);
 
     void update(long id, Post post);
 }
