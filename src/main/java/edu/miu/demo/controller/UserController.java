@@ -1,5 +1,6 @@
 package edu.miu.demo.controller;
 
+import edu.miu.demo.aspect.annotation.ExecutionTime;
 import edu.miu.demo.domain.User;
 import edu.miu.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @ExecutionTime
     public User findById(@PathVariable long id) {
         return userService.getById(id);
     }
