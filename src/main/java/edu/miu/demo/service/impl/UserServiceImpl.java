@@ -1,6 +1,8 @@
 package edu.miu.demo.service.impl;
 
+import edu.miu.demo.domain.Role;
 import edu.miu.demo.domain.User;
+import edu.miu.demo.repo.RoleRepo;
 import edu.miu.demo.repo.UserRepo;
 import edu.miu.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    RoleRepo roleRepo;
 
     @Override
     public List<User> findAll() {
@@ -49,7 +54,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void seed(List<User> users) {
+        Role admin = new Role(1, "ADMIN");
+        Role client = new Role(2, "CLIENT");
+        roleRepo.save(admin);
+        roleRepo.save(client);
+        List<Role> adminList = new ArrayList<>();
+        List<Role> clientList = new ArrayList<>();
+        clientList.add(client);
+        adminList.add(admin);
+        for(int i = 0; i < users.size(); i++){
+            if (i % 2 == 0) {
+                users.get(i).setRoles(adminList);
+            } else {
+                users.get(i).setRoles(clientList);
+            }
+        }
         userRepo.saveAll(users);
+
     }
 
 

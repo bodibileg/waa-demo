@@ -16,21 +16,21 @@ public class ExceptionAspect {
     @Autowired
     ExceptionRepo exceptionRepo;
 
-    @Pointcut("within(edu.miu.demo.controller..*)")
-    public void exception(){};
-
-    @Around("exception()")
-    public Object saveException(ProceedingJoinPoint proceedingJoinPoint) {
-        try {
-            return proceedingJoinPoint.proceed();
-        } catch (Throwable ex) {
-            Exception exception = new Exception();
-            exception.setOperation(proceedingJoinPoint.getSignature().getName());
-            exception.setPrinciple("user1");
-            exception.setException_type(ex.getClass().getSimpleName());
-            exception.setMessage(ex.getMessage());
-            exceptionRepo.save(exception);
-        }
-        return null;
-    }
+//    @Pointcut("within(edu.miu.demo.controller..*)")
+//    public void exception(){};
+//
+//    @Around("exception()")
+//    public Object saveException(ProceedingJoinPoint proceedingJoinPoint) {
+//        try {
+//            return proceedingJoinPoint.proceed();
+//        } catch (Throwable ex) {
+//            Exception exception = new Exception();
+//            exception.setOperation(proceedingJoinPoint.getSignature().getName());
+//            exception.setPrinciple("user1");
+//            exception.setException_type(ex.getClass().getSimpleName());
+//            exception.setMessage(ex.getMessage());
+//            exceptionRepo.save(exception);
+//        }
+//        return null;
+//    }
 }

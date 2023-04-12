@@ -3,6 +3,7 @@ package edu.miu.demo.aspect;
 import edu.miu.demo.domain.Logger;
 import edu.miu.demo.repo.LoggerRepo;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -29,4 +30,5 @@ public class LoggerAspect {
 
         loggerRepo.save(log);
     }
+
 }

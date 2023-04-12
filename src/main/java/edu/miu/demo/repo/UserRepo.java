@@ -15,7 +15,8 @@ public interface UserRepo extends CrudRepository<User,Long> {
     //@Query( "select p from Product p where count(p.reviews) >= :num" )
 
 //    @Query("select u from User u where count(u.posts) >= :num")
-    @Query("SELECT u FROM User u JOIN u.posts p GROUP BY u.id HAVING COUNT(p) > :num")
+    @Query("SELECT u FROM User u JOIN u.posts p GROUP BY u.id HAVING SIZE(u.posts) = :num ")
     List<User> findByPostsGreaterThan(int num);
 
+    User findByEmail(String username);
 }
